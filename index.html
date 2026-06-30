@@ -2,166 +2,500 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NUKO Capital — Programa de Referidos</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nu-Ko Capital · Break-Even</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-/* [MANTÉN TODOS TUS ESTILOS AQUÍ - SON LOS MISMOS QUE YA TENÍAS] */
-:root { --dark: #0A0E1A; --navy: #0D1B3E; --gold: #C9992A; --gold2: #F0B93A; --white: #FFFFFF; --gray3: #B0A898; --green: #1B7A4B; --border: rgba(201,153,42,0.15); }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: var(--white); min-height: 100vh; }
-/* ... Y EL RESTO DE TUS ESTILOS ... */
+:root{
+  --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--bg4:#242424;--bg5:#303030;
+  --red:#c8102e;--red2:#9e0d24;--red3:rgba(200,16,46,.10);--redb:rgba(200,16,46,.28);
+  --wh:#f5f5f0;--wh2:#d0d0c8;--wh3:#999;--wh4:#555;
+  --green:#1d9e75;--amber:#d4a017;--blue:#185fa5;
+  --sans:'Inter',system-ui,sans-serif;--mono:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px;background:var(--bg);color:var(--wh);font-family:var(--sans)}
+body{min-height:100vh}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:2px}
+
+/* ── LAYOUT ── */
+.shell{display:grid;grid-template-columns:200px 1fr;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{background:var(--bg2);border-right:1px solid var(--bg4);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.brand{padding:24px 20px 20px;border-bottom:1px solid var(--bg4)}
+.brand-mark{display:flex;align-items:center;gap:9px;margin-bottom:2px}
+.brand-dot{width:7px;height:7px;border-radius:50%;background:var(--red);animation:glow 2.4s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 4px var(--red)}50%{box-shadow:0 0 14px var(--red),0 0 22px rgba(200,16,46,.3)}}
+.brand-name{font-size:15px;font-weight:600;letter-spacing:-.02em}
+.brand-sub{font-family:var(--mono);font-size:9px;color:var(--wh4);letter-spacing:.12em;text-transform:uppercase;padding-left:16px}
+.period{margin:14px 0 0;background:var(--bg4);border-radius:4px;padding:6px 10px;font-family:var(--mono);font-size:9px;color:var(--wh4);display:flex;justify-content:space-between}
+.period .val{color:var(--red);font-weight:500}
+
+nav{flex:1;padding:14px 8px}
+.nav-sec{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--wh4);padding:0 10px;margin:12px 0 4px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:500;color:var(--wh4);border:1px solid transparent;transition:all .15s;margin-bottom:1px;text-decoration:none}
+.nav-item:hover{background:var(--bg4);color:var(--wh2)}
+.nav-item.active{background:var(--red3);border-color:var(--redb);color:var(--wh)}
+.nav-item.active .ni{color:var(--red)}
+.ni{font-size:13px;width:14px;text-align:center;opacity:.7}
+.nav-item.active .ni{opacity:1}
+
+.sidebar-foot{padding:14px 20px;border-top:1px solid var(--bg4)}
+.health-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--wh4);margin-bottom:5px}
+.health-row .hv{color:var(--red)}
+.health-track{height:2px;background:var(--bg4);border-radius:1px;overflow:hidden}
+.health-fill{height:100%;border-radius:1px;transition:width 1s ease}
+
+/* ── MAIN ── */
+.main{display:flex;flex-direction:column;overflow-y:auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--bg4);background:var(--bg);position:sticky;top:0;z-index:20}
+.tb-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--wh2)}
+.tb-right{display:flex;align-items:center;gap:10px}
+.btn{border:1px solid var(--bg5);background:var(--bg4);color:var(--wh2);border-radius:5px;padding:6px 14px;font-size:11px;font-family:var(--sans);font-weight:600;cursor:pointer;transition:background .15s}
+.btn:hover{background:var(--bg5)}
+.btn-red{background:var(--red);border-color:var(--red);color:#fff}
+.btn-red:hover{background:var(--red2)}
+
+.content{padding:24px 28px;flex:1}
+
+/* ── SECTION ── */
+.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.sec-lbl{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--wh4);white-space:nowrap}
+.sec-line{flex:1;height:1px;background:var(--bg4)}
+
+/* ── KPI GRID ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--bg4);border:1px solid var(--bg4);border-radius:8px;overflow:hidden;margin-bottom:24px}
+.kpi{background:var(--bg2);padding:16px 18px 14px;position:relative;transition:background .15s}
+.kpi:hover{background:var(--bg3)}
+.kpi.accent::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--red)}
+.kl{font-family:var(--mono);font-size:10px;color:var(--wh4);text-transform:uppercase;letter-spacing:.05em;margin-bottom:7px}
+.kv{font-family:var(--mono);font-size:20px;font-weight:500;letter-spacing:-.03em;line-height:1;margin-bottom:5px}
+.kv.pos{color:var(--green)}.kv.neg{color:var(--red)}.kv.neu{color:var(--wh)}
+.ks{font-family:var(--mono);font-size:10px;color:var(--wh4)}
+
+/* ── CONTROLS ── */
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;background:var(--bg2);border:1px solid var(--bg4);border-radius:8px;padding:20px}
+.ctrl{display:flex;flex-direction:column;gap:8px}
+.ctrl-label{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--wh3)}
+.ctrl-val{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--wh);background:var(--bg4);border:1px solid var(--bg5);border-radius:4px;padding:2px 8px}
+input[type=range]{width:100%;height:4px;border-radius:2px;background:var(--bg5);outline:none;cursor:pointer;-webkit-appearance:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--red);cursor:pointer;border:2px solid var(--bg2)}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
+
+/* ── BE MARKER ── */
+.be-marker{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:6px;font-size:12px;margin-bottom:16px;font-family:var(--mono)}
+.be-marker.ok{background:rgba(29,158,117,.1);border:1px solid rgba(29,158,117,.25);color:#2ec89a}
+.be-marker.fail{background:var(--red3);border:1px solid var(--redb);color:var(--red)}
+.be-icon{font-size:14px}
+
+/* ── CHART CARD ── */
+.chart-card{background:var(--bg2);border:1px solid var(--bg4);border-radius:8px;padding:22px;margin-bottom:24px}
+.chart-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--wh3);margin-bottom:3px}
+.chart-sub{font-family:var(--mono);font-size:10px;color:var(--wh4);margin-bottom:16px}
+.chart-wrap{position:relative;width:100%;height:300px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px}
+.li{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--wh3)}
+.ld{width:10px;height:3px;border-radius:1px;flex-shrink:0}
+.ld.dashed{border-top:2px dashed #378ADD;height:0;width:16px}
+
+/* ── SCENARIOS ── */
+.scenarios{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:24px}
+.sc{background:var(--bg2);border:1px solid var(--bg4);border-radius:8px;padding:16px}
+.sc-title{font-size:11px;font-weight:500;color:var(--wh3);margin-bottom:10px}
+.sc-val{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--wh);margin-bottom:3px}
+.sc-unit{font-size:11px;font-weight:400;color:var(--wh4)}
+.sc-sub{font-size:11px;color:var(--wh4);margin-top:3px}
+.sc-desc{font-size:10px;color:var(--wh4);margin-top:6px;line-height:1.5}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:10px;margin-top:8px;letter-spacing:.04em}
+.tag-green{background:rgba(29,158,117,.12);color:#2ec89a;border:1px solid rgba(29,158,117,.2)}
+.tag-amber{background:rgba(212,160,23,.12);color:var(--amber);border:1px solid rgba(212,160,23,.2)}
+.tag-red{background:var(--red3);color:var(--red);border:1px solid var(--redb)}
+
+/* ── COST BREAKDOWN ── */
+.cost-table{width:100%;border-collapse:collapse;font-size:12px}
+.cost-table th{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--wh4);text-align:left;padding:8px 14px;border-bottom:1px solid var(--bg4);font-weight:400}
+.cost-table th:not(:first-child){text-align:right}
+.cost-table td{padding:10px 14px;font-family:var(--mono);font-size:11px;color:var(--wh3);border-bottom:1px solid var(--bg3)}
+.cost-table td:first-child{font-family:var(--sans);font-size:12px;color:var(--wh)}
+.cost-table td:not(:first-child){text-align:right}
+.cost-table tr:last-child td{border-bottom:none}
+.cost-table tr:hover td{background:var(--bg3)}
+.cost-table .tot td{background:var(--bg3);font-weight:500;color:var(--wh)!important}
+.tp{color:var(--green)}.tn{color:var(--red)}.tu{color:var(--wh4)}
+.bar-wrap{display:flex;align-items:center;gap:8px}
+.bar-track{flex:1;height:3px;background:var(--bg5);border-radius:2px;overflow:hidden;min-width:60px}
+.bar-fill{height:100%;border-radius:2px;transition:width .8s ease}
+
+/* ── FOOTER ── */
+footer{padding:12px 28px;border-top:1px solid var(--bg4);display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--wh4)}
+footer span{color:var(--red)}
+
+@media(max-width:720px){
+  .shell{grid-template-columns:1fr}.sidebar{display:none}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .controls{grid-template-columns:1fr}
+  .scenarios{grid-template-columns:1fr}
+  .content{padding:16px}.topbar{padding:12px 16px}
+}
+@media print{.sidebar,.topbar{display:none}.shell{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<!-- MANTÉN LA ESTRUCTURA HTML QUE YA TENÍAS -->
-<script>
-// ============================================================
-// CONFIGURACIÓN - REEMPLAZA CON TU ID
-// ============================================================
-const SHEET_ID = '1Hb6hhrx_fJv8nM9ROUbiEOvHrT0MhzJo9qfNigL4cME';
-const SHEET_GID = '0'; // 0 = primera hoja, cambia si tu tabla está en otra pestaña
+<div class="shell">
 
-// ============================================================
-// CARGAR DATOS DESDE GOOGLE SHEETS (MÉTODO CSV - SIN API KEY)
-// ============================================================
-async function cargarDatos() {
-  try {
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${SHEET_GID}`;
-    
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error('Error al cargar los datos: ' + response.status);
-    }
-    
-    const csvText = await response.text();
-    const rows = csvText.split('\n').filter(row => row.trim() !== '');
-    
-    if (rows.length < 2) {
-      throw new Error('No se encontraron datos en la hoja');
-    }
-    
-    // Convertir CSV a objetos
-    const headers = rows[0].split(',').map(h => h.trim().replace(/"/g, '').toLowerCase().replace(/ /g, '_'));
-    const dataRows = rows.slice(1);
-    
-    const objetos = dataRows.map(row => {
-      const values = row.split(',').map(v => v.trim().replace(/"/g, ''));
-      const obj = {};
-      headers.forEach((header, index) => {
-        obj[header] = values[index] || '';
-      });
-      return obj;
-    });
-    
-    return objetos;
-    
-  } catch (error) {
-    console.error('Error:', error);
-    document.getElementById('loading').innerHTML = `
-      ❌ Error al cargar datos: ${error.message}<br>
-      <small>Verifica que la hoja esté publicada y el ID sea correcto.</small>
-      <br><br>
-      <button onclick="location.reload()" style="padding:8px 20px;background:var(--gold);color:var(--dark);border:none;border-radius:6px;cursor:pointer;font-weight:600;">Reintentar</button>
-    `;
-    return null;
-  }
-}
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-mark"><div class="brand-dot"></div><span class="brand-name">Nu-Ko Capital</span></div>
+    <div class="brand-sub">Break-Even</div>
+    <div class="period">Análisis <span class="val">Q1 2026</span></div>
+  </div>
+  <nav>
+    <div class="nav-sec">Supuestos</div>
+    <div class="nav-item active"><span class="ni">◈</span> Proyección</div>
+    <div class="nav-sec">Datos base</div>
+    <div class="nav-item"><span class="ni">◎</span> Estructura costos</div>
+  </nav>
+  <div class="sidebar-foot">
+    <div class="health-row">Margen contribución <span class="hv" id="s-cm">39.4%</span></div>
+    <div class="health-track"><div class="health-fill" id="s-fill" style="width:39%;background:var(--red)"></div></div>
+    <div style="font-family:var(--mono);font-size:9px;color:var(--wh4);margin-top:8px" id="s-be-label">BE: $491K/mes</div>
+  </div>
+</aside>
 
-// ============================================================
-// FUNCIONES DE RENDERIZADO (AJÚSTALAS SEGÚN TUS COLUMNAS)
-// ============================================================
-function renderizarDashboard(data) {
-  if (!data || data.length === 0) {
-    document.getElementById('loading').innerHTML = '❌ No se encontraron datos. Verifica que la hoja tenga información.';
-    return;
-  }
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="tb-title">Proyección break-even · Nu-Ko Capital LLC</div>
+    <div class="tb-right">
+      <button class="btn" onclick="resetSliders()">↺ Restablecer</button>
+      <button class="btn btn-red" onclick="window.print()">↓ Exportar</button>
+    </div>
+  </div>
 
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('dashboardContent').style.display = 'block';
-  document.getElementById('fechaActual').textContent = new Date().toLocaleDateString('es-ES', { day:'numeric', month:'long', year:'numeric' });
+  <div class="content">
 
-  // Calcular KPIs - AJUSTA LOS NOMBRES DE COLUMNAS SEGÚN TU TABLA
-  const referentes = new Set(data.map(r => r.cliente_referente || r.referente || r.referente_cliente || '')).size;
-  const referidosTotales = data.length;
-  const referidosActivos = data.filter(r => (r.estado || r.estatus || '').toLowerCase().includes('activo')).length;
-  
-  let volumenTotal = 0;
-  data.forEach(r => {
-    const v = parseFloat(r.volumen_factorizado) || parseFloat(r.volumen_facturado) || parseFloat(r.monto_total) || 0;
-    volumenTotal += v;
-  });
-  
-  let permanenciaTotal = 0, permanenciaCount = 0;
-  data.forEach(r => {
-    const p = parseInt(r.permanencia_dias) || parseInt(r.dias_activo) || parseInt(r.dias_permanencia) || 0;
-    if (p > 0) { permanenciaTotal += p; permanenciaCount++; }
-  });
-  const promedioPermanencia = permanenciaCount > 0 ? Math.round(permanenciaTotal / permanenciaCount) : 0;
-
-  // Renderizar KPIs
-  const kpiGrid = document.getElementById('kpiGrid');
-  if (kpiGrid) {
-    const kpis = [
-      { label: 'Referentes únicos', value: referentes, class: 'blue', sub: 'clientes que refirieron' },
-      { label: 'Total referidos', value: referidosTotales, class: '', sub: 'registrados en el programa' },
-      { label: 'Referidos activos', value: referidosActivos, class: 'green', sub: referidosTotales > 0 ? Math.round((referidosActivos/referidosTotales)*100) + '% del total' : '0%' },
-      { label: 'Volumen factorizado', value: volumenTotal >= 1000 ? '$' + (volumenTotal/1000).toFixed(1) + 'K' : '$' + volumenTotal.toFixed(0), class: 'amber', sub: 'total facturado por referidos' },
-      { label: 'Permanencia promedio', value: promedioPermanencia + ' días', class: '', sub: 'tiempo activo promedio' }
-    ];
-    
-    kpiGrid.innerHTML = kpis.map(k => `
-      <div class="kpi-card">
-        <div class="kpi-label">${k.label}</div>
-        <div class="kpi-value ${k.class}">${k.value}</div>
-        <div class="kpi-sub">${k.sub}</div>
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi accent">
+        <div class="kl">Break-even mensual</div>
+        <div class="kv neu" id="k-be">$491K</div>
+        <div class="ks">Ingresos necesarios/mes</div>
       </div>
-    `).join('');
-  }
+      <div class="kpi">
+        <div class="kl">Punto de partida</div>
+        <div class="kv neg">$322K</div>
+        <div class="ks">Marzo 2026 (real)</div>
+      </div>
+      <div class="kpi">
+        <div class="kl">Gap al break-even</div>
+        <div class="kv neg" id="k-gap">$169K</div>
+        <div class="ks">Ingresos adicionales/mes</div>
+      </div>
+      <div class="kpi">
+        <div class="kl">Costos fijos / mes</div>
+        <div class="kv neu" id="k-fixed">$193.7K</div>
+        <div class="ks">BPO + operativos</div>
+      </div>
+    </div>
 
-  // Renderizar tabla de referidos - AJUSTA LOS NOMBRES DE COLUMNAS
-  const tbody = document.getElementById('tbReferidos');
-  if (tbody) {
-    tbody.innerHTML = data.slice(0, 50).map((row, i) => {
-      const estado = (row.estado || row.estatus || 'Pendiente').toLowerCase();
-      let badgeClass = 'badge-gray';
-      if (estado.includes('activo')) badgeClass = 'badge-green';
-      else if (estado.includes('proceso') || estado.includes('revisión')) badgeClass = 'badge-amber';
-      else if (estado.includes('inactivo') || estado.includes('suspendido')) badgeClass = 'badge-red';
-      
-      const ref = row.cliente_referente || row.referente || row.referente_cliente || '-';
-      const modal = row.modalidad || row.metodo || 'ACH/Wire';
-      const vol = parseFloat(row.volumen_factorizado) || parseFloat(row.volumen_facturado) || parseFloat(row.monto_total) || 0;
-      const dias = parseInt(row.permanencia_dias) || parseInt(row.dias_activo) || parseInt(row.dias_permanencia) || 0;
-      const nombre = row.cliente_referido || row.referido || row.nombre_referido || `Ref-${i+1}`;
-      
-      return `<tr>
-        <td style="color:var(--gray3);font-size:11px;">${i+1}</td>
-        <td>${nombre}</td>
-        <td style="color:var(--gray3);font-size:12px;">${ref}</td>
-        <td><span class="badge badge-blue">${modal}</span></td>
-        <td class="num" style="color:var(--gold2);">$${vol.toFixed(0)}</td>
-        <td class="num">${dias > 0 ? dias + ' días' : '—'}</td>
-        <td><span class="badge ${badgeClass}">${estado}</span></td>
-      </tr>`;
-    }).join('');
-    
-    if (data.length > 50) {
-      tbody.innerHTML += `<tr><td colspan="7" style="text-align:center;color:var(--gray3);font-size:12px;padding:10px;">... y ${data.length - 50} referidos más</td></tr>`;
-    }
+    <!-- CONTROLS -->
+    <div class="sec-hdr"><div class="sec-lbl">Ajusta los supuestos</div><div class="sec-line"></div></div>
+    <div class="controls">
+      <div class="ctrl">
+        <div class="ctrl-label">👥 Participantes <span class="ctrl-val" id="lbl-part">50</span></div>
+        <input type="range" min="0" max="100" value="50" step="1" id="sl-part" oninput="update()">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-label">📈 Ref. promedio (anual) <span class="ctrl-val" id="lbl-prom">2.5</span></div>
+        <input type="range" min="0" max="5" value="2.5" step="0.1" id="sl-prom" oninput="update()">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-label">💰 Inversión promedio (%) <span class="ctrl-val" id="lbl-inv">75%</span></div>
+        <input type="range" min="0" max="100" value="75" step="1" id="sl-inv" oninput="update()">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-label">💳 Comisión por referido (%) <span class="ctrl-val" id="lbl-com">50%</span></div>
+        <input type="range" min="0" max="100" value="50" step="1" id="sl-com" oninput="update()">
+      </div>
+    </div>
+
+    <!-- BE MARKER -->
+    <div class="be-marker ok" id="be-marker">
+      <span class="be-icon">✓</span>
+      Break-even proyectado: <strong id="be-month">Agosto 2026</strong>
+    </div>
+
+    <!-- CHART -->
+    <div class="chart-card">
+      <div class="chart-title">Proyección mensual de ingresos vs. costos</div>
+      <div class="chart-sub">Marzo 2026 → Diciembre 2026 · USD</div>
+      <div class="legend">
+        <div class="li"><div class="ld" style="background:#1D9E75"></div>Ingresos proyectados</div>
+        <div class="li"><div class="ld" style="background:#E24B4A"></div>Costos totales</div>
+        <div class="li"><div class="ld dashed"></div>Línea break-even</div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="chart" role="img" aria-label="Proyección mensual break-even Nu-Ko Capital marzo a diciembre 2026">Proyección break-even: ingresos vs costos totales por mes.</canvas>
+      </div>
+    </div>
+
+    <!-- SCENARIOS -->
+    <div class="sec-hdr"><div class="sec-lbl">Escenarios comparados</div><div class="sec-line"></div></div>
+    <div class="scenarios" id="scenarios"></div>
+
+    <!-- COST BREAKDOWN -->
+    <div class="sec-hdr"><div class="sec-lbl">Estructura de costos base</div><div class="sec-line"></div></div>
+    <div class="chart-card" style="padding:0;overflow:hidden">
+      <table class="cost-table">
+        <thead>
+          <tr><th>Concepto</th><th>Mensual</th><th>Trimestral</th><th>Tipo</th><th>% del total</th></tr>
+        </thead>
+        <tbody id="cost-body"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>Nu-Ko Capital LLC · Análisis Break-Even · Datos reales Q1 2026 · QuickBooks Accrual</span>
+    <span>Ene–Mar 2026</span>
+  </footer>
+</div>
+</div>
+
+<script>
+// ── CONSTANTES REALES DEL CSV ────────────────────────────────────────
+const FI_RATE    = 0.389;   // Financial Interests / Total Income
+const FIXED_BPO  = 138243;  // Expense BPO mensual promedio
+const FIXED_SOFT =  14877;  // Software & Apps
+const FIXED_LAB  =  13333;  // Contract Labor
+const FIXED_LEG  =  12585;  // Legal & Professional
+const FIXED_BANK =  12683;  // Bank charges + Commissions + Insurance
+const FIXED_GEN  =   1991;  // General business
+
+const COST_ITEMS = [
+  { label:'Expense BPO',          mo:FIXED_BPO,  type:'Semi-fijo', color:'#D4537E' },
+  { label:'Software & Apps',      mo:FIXED_SOFT, type:'Fijo',      color:'#888780' },
+  { label:'Contract Labor',       mo:FIXED_LAB,  type:'Fijo',      color:'#888780' },
+  { label:'Legal & Professional', mo:FIXED_LEG,  type:'Fijo',      color:'#888780' },
+  { label:'Bank & Otros',         mo:FIXED_BANK, type:'Fijo',      color:'#888780' },
+  { label:'General Business',     mo:FIXED_GEN,  type:'Variable',  color:'#888780' },
+];
+
+const MONTHS_SHORT = ['Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const MONTHS_FULL  = ['Marzo 2026','Abril 2026','Mayo 2026','Junio 2026','Julio 2026','Agosto 2026','Septiembre 2026','Octubre 2026','Noviembre 2026','Diciembre 2026'];
+
+let chart = null;
+
+// ── FORMAT ───────────────────────────────────────────────────────────
+function fmt(v, compact=true) {
+  const a=Math.abs(v), neg=v<0, s=neg?'(':'' ,e=neg?')':'';
+  let r;
+  if (compact) {
+    if (a>=1e6) r='$'+(a/1e6).toFixed(2)+'M';
+    else if (a>=1e3) r='$'+Math.round(a/1e3)+'K';
+    else r='$'+Math.round(a).toLocaleString();
+  } else {
+    r='$'+Math.round(a).toLocaleString('en-US');
   }
+  return s+r+e;
 }
 
-// ============================================================
-// INICIALIZACIÓN
-// ============================================================
-document.addEventListener('DOMContentLoaded', async () => {
-  const data = await cargarDatos();
-  if (data) {
-    renderizarDashboard(data);
+// ── CALC ─────────────────────────────────────────────────────────────
+function calc(baseK, growthPct, bpoCutPct, bdRatePct) {
+  const base    = baseK * 1000;
+  const bpo_mo  = FIXED_BPO * (1 - bpoCutPct / 100);
+  const fixedMo = bpo_mo + FIXED_SOFT + FIXED_LAB + FIXED_LEG + FIXED_BANK + FIXED_GEN;
+  const varRate = FI_RATE + bdRatePct / 100;
+  const cm      = 1 - varRate;
+  const beRev   = cm > 0 ? fixedMo / cm : Infinity;
+
+  const months = [];
+  let rev = base;
+  for (let i = 0; i < 10; i++) {
+    if (i > 0) rev *= (1 + growthPct / 100);
+    const cogs  = rev * FI_RATE;
+    const bd    = rev * bdRatePct / 100;
+    const cost  = cogs + bd + fixedMo;
+    const res   = rev - cost;
+    months.push({ rev: Math.round(rev), cost: Math.round(cost), res: Math.round(res) });
   }
-});
-</script>
-</body>
-</html>
+
+  return { months, beRev: Math.round(beRev), fixedMo: Math.round(fixedMo), cm: (cm*100).toFixed(1), bpo_mo: Math.round(bpo_mo) };
+}
+
+function findBE(months) {
+  for (let i = 1; i < months.length; i++) {
+    if (months[i].res >= 0) return i;
+  }
+  return -1;
+}
+
+// ── UPDATE ───────────────────────────────────────────────────────────
+function update() {
+  // Leer los sliders de variables
+  const part = parseFloat(document.getElementById('sl-part').value);
+  const prom = parseFloat(document.getElementById('sl-prom').value);
+  const invPct = parseFloat(document.getElementById('sl-inv').value);
+  const comPct = parseFloat(document.getElementById('sl-com').value);
+
+  // Mostrar valores en labels
+  document.getElementById('lbl-part').textContent = part;
+  document.getElementById('lbl-prom').textContent = prom.toFixed(1);
+  document.getElementById('lbl-inv').textContent = invPct + '%';
+  document.getElementById('lbl-com').textContent = comPct + '%';
+
+  // Calcular total de referidos y variables de proyección
+  const totalReferidos = part * prom;
+  const inversionTotal = totalReferidos * 1000 * (invPct / 100);
+  const comisionTotal = totalReferidos * 1000 * (comPct / 100);
+  const gananciaNeta = inversionTotal - comisionTotal;
+  const roi = comisionTotal > 0 ? (gananciaNeta / comisionTotal) * 100 : 0;
+
+  // Actualizar KPIs del simulador
+  document.getElementById('k-be').textContent = '$' + Math.round(totalReferidos * 1000).toLocaleString();
+  document.getElementById('k-gap').textContent = '$' + Math.round(comisionTotal).toLocaleString();
+  document.getElementById('k-fixed').textContent = '$' + Math.round(gananciaNeta).toLocaleString();
+
+  // Actualizar sidebar
+  document.getElementById('s-cm').textContent = roi.toFixed(1) + '%';
+  document.getElementById('s-be-label').textContent = 'ROI: ' + roi.toFixed(0) + '%';
+  document.getElementById('s-fill').style.width = Math.min(100, roi + 60) + '%';
+
+  // BE marker
+  const marker = document.getElementById('be-marker');
+  const beMonthEl = document.getElementById('be-month');
+  if (roi > 0) {
+    marker.className = 'be-marker ok';
+    marker.innerHTML = '✓ ROI positivo: <strong>' + roi.toFixed(0) + '%</strong>';
+  } else {
+    marker.className = 'be-marker fail';
+    marker.innerHTML = '⚠ ROI negativo: ' + roi.toFixed(0) + '%';
+  }
+
+  // Dibujar gráfico con datos de proyección
+  const meses = MONTHS_SHORT;
+  const ingresos = Array(10).fill().map((_, i) => totalReferidos * (1000 + i * 200));
+  const costos = Array(10).fill().map((_, i) => comisionTotal + (i * 1000));
+  const beLine = Array(10).fill(totalReferidos * 1500);
+
+  drawChart(meses, ingresos, costos, beLine);
+  renderScenarios(totalReferidos, inversionTotal, comisionTotal, roi);
+  renderCosts(comisionTotal);
+}
+
+// ── CHART ────────────────────────────────────────────────────────────
+function drawChart(labels, ingresos, costos, beLine) {
+  const isDark = true;
+  const gridC  = 'rgba(255,255,255,0.05)';
+  const tickC  = '#555';
+  const fmtY   = v => (v >= 1e6 ? '$' + (v/1e6).toFixed(1) + 'M' : '$' + Math.round(v/1e3) + 'K');
+
+  if (chart) chart.destroy();
+  chart = new Chart(document.getElementById('chart'), {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Ingresos proyectados',
+          data: ingresos,
+          borderColor: '#1D9E75',
+          backgroundColor: 'rgba(29,158,117,0.07)',
+          fill: true, tension: 0.35, borderWidth: 2,
+          pointBackgroundColor: ingresos.map(v => v >= costos[ingresos.indexOf(v)] ? '#1D9E75' : '#E24B4A'),
+          pointRadius: 4, pointHoverRadius: 6,
+        },
+        {
+          label: 'Costos totales',
+          data: costos,
+          borderColor: '#E24B4A',
+          backgroundColor: 'rgba(226,75,74,0.04)',
+          fill: true, tension: 0.35, borderWidth: 1.5,
+          pointBackgroundColor: '#E24B4A',
+          pointRadius: 3,
+        },
+        {
+          label: 'Break-even',
+          data: beLine,
+          borderColor: '#378ADD',
+          borderDash: [5, 3],
+          borderWidth: 1.5,
+          pointRadius: 0,
+          fill: false,
+          tension: 0,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1a1a',
+          borderColor: '#333', borderWidth: 1,
+          titleColor: '#ddd', bodyColor: '#aaa',
+          callbacks: {
+            label: ctx => ' ' + ctx.dataset.label + ': ' + fmtY(ctx.raw),
+            afterBody: items => {
+              if (!items[0] || !items[1]) return [];
+              const r = items[0].raw - items[1].raw;
+              return ['', (r >= 0 ? '✓ Ganancia: ' : '✗ Pérdida: ') + fmtY(Math.abs(r))];
+            }
+          }
+        }
+      },
+      scales: {
+        x: { ticks: { color: tickC, font: { size: 11 } }, grid: { color: gridC } },
+        y: {
+          ticks: { color: tickC, font: { size: 11 }, callback: fmtY },
+          grid: { color: gridC },
+        }
+      }
+    }
+  });
+}
+
+// ── SCENARIOS ────────────────────────────────────────────────────────
+function renderScenarios(totalRefs, inversion, comision, roi) {
+  const cases = [
+    { label:'Optimista', refs: totalRefs * 1.2, inv: inversion * 1.1, com: comision * 0.8, desc:'+20% referidos, -20% comisión' },
+    { label:'Conservador', refs: totalRefs * 0.8, inv: inversion * 0.9, com: comision * 1.1, desc:'-20% referidos, +10% comisión' },
+    { label:'Base', refs: totalRefs, inv: inversion, com: comision, desc:'Valores actuales' },
+  ];
+
+  document.getElementById('scenarios').innerHTML = cases.map(c => {
+    const ganancia = c.inv - c.com;
+    const roiCalc = c.com > 0 ? (ganancia / c.com) * 100 : 0;
+    const tagCls = roiCalc > 10 ? 'tag-green' : roiCalc > 0 ? 'tag-amber' : 'tag-red';
+    const tagLabel = roiCalc > 10 ? '✅ Rentable' : roiCalc > 0 ? '⚠️ Marginal' : '❌ Pérdida';
+    return `
+    <div class="sc">
+      <div class="sc-title">${c.label}</div>
+      <div class="sc-val">${fmt(c.inv)}<span class="sc-unit"> inv.</span></div>
+      <div class="sc-sub">Comisión: ${fmt(c.com)}</div>
+      <div class="sc-desc">${c.desc}</div>
+      <span class="tag ${tagCls}">${tagLabel} · ROI ${roiCalc.toFixed(0)}%</span>
+    </div>`;
+  }).join('');
+}
+
+// ── COST TABLE ───────────────────────────────────────────────────────
+function renderCosts(totalComision) {
+  const items = [
+    { label:'Comisiones por referido', mo: totalComision, type:'Variable', color:'#E24B4A' },
+    { label:'Inversión promedio', mo: totalComision * 0.6, type:'Variable', color:'#1D9E75' },
+    { label:'Margen operativo', mo: totalComision * 0.2, type:'Fijo', color:'#378ADD' },
+  ];
+  const total = items.reduce((s, c) => s + c.mo, 0);
+  document.getElementById('cost-body').innerHTML = items.map(c => {
+    const pct = total ? (c.mo / total * 100).toFixed(1) : 0;
+    return `<tr>
+      <td>${c.label}</td>
+      <td class="tn">${fmt(c.mo, false)}</td>
+      <td
