@@ -132,6 +132,7 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
 
   <div class="content">
 
+    <!-- KPIs -->
     <div class="kpi-grid">
       <div class="kpi accent">
         <div class="kl">Total referidos</div>
@@ -155,11 +156,12 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
       </div>
     </div>
 
+    <!-- CONTROLES -->
     <div class="sec-hdr"><div class="sec-lbl">Ajusta los supuestos</div><div class="sec-line"></div></div>
     <div class="controls">
       <div class="ctrl">
-        <div class="ctrl-label">👥 Participantes <span class="ctrl-val" id="lbl-part">14</span></div>
-        <input type="range" min="0" max="100" value="14" step="1" id="sl-part" oninput="update()">
+        <div class="ctrl-label">👥 Participantes <span class="ctrl-val" id="lbl-part">45</span></div>
+        <input type="range" min="0" max="100" value="45" step="1" id="sl-part" oninput="update()">
       </div>
       <div class="ctrl">
         <div class="ctrl-label">📈 Ref. promedio (anual) <span class="ctrl-val" id="lbl-prom">2.5</span></div>
@@ -175,10 +177,12 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
       </div>
     </div>
 
+    <!-- ROI MARKER -->
     <div class="be-marker fail" id="be-marker" style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:6px;font-size:12px;margin-bottom:16px;font-family:var(--mono);background:var(--red3);border:1px solid var(--redb);color:var(--red);">
       <span class="be-icon">✗</span> ROI negativo: <strong id="roi-label">0%</strong>
     </div>
 
+    <!-- CHART -->
     <div class="chart-card">
       <div class="chart-title">Proyección mensual de ingresos vs. costos</div>
       <div class="chart-sub">Marzo 2026 → Diciembre 2026 · USD</div>
@@ -302,7 +306,7 @@ function drawChart(labels, ingresos, costos) {
 }
 
 function resetSliders() {
-  document.getElementById('sl-part').value = 14;
+  document.getElementById('sl-part').value = 45;
   document.getElementById('sl-prom').value = 2.5;
   document.getElementById('sl-inv').value = 28;
   document.getElementById('sl-com').value = 50;
