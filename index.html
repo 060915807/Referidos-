@@ -20,10 +20,8 @@ body{min-height:100vh}
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:2px}
 
-/* ── LAYOUT ── */
 .shell{display:grid;grid-template-columns:200px 1fr;min-height:100vh}
 
-/* ── SIDEBAR ── */
 .sidebar{background:var(--bg2);border-right:1px solid var(--bg4);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
 .brand{padding:24px 20px 20px;border-bottom:1px solid var(--bg4)}
 .brand-mark{display:flex;align-items:center;gap:9px;margin-bottom:2px}
@@ -49,7 +47,6 @@ nav{flex:1;padding:14px 8px}
 .health-track{height:2px;background:var(--bg4);border-radius:1px;overflow:hidden}
 .health-fill{height:100%;border-radius:1px;transition:width 1s ease}
 
-/* ── MAIN ── */
 .main{display:flex;flex-direction:column;overflow-y:auto}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--bg4);background:var(--bg);position:sticky;top:0;z-index:20}
 .tb-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--wh2)}
@@ -61,12 +58,10 @@ nav{flex:1;padding:14px 8px}
 
 .content{padding:24px 28px;flex:1}
 
-/* ── SECTION ── */
 .sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px}
 .sec-lbl{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--wh4);white-space:nowrap}
 .sec-line{flex:1;height:1px;background:var(--bg4)}
 
-/* ── KPI GRID ── */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--bg4);border:1px solid var(--bg4);border-radius:8px;overflow:hidden;margin-bottom:24px}
 .kpi{background:var(--bg2);padding:16px 18px 14px;position:relative;transition:background .15s}
 .kpi:hover{background:var(--bg3)}
@@ -76,7 +71,6 @@ nav{flex:1;padding:14px 8px}
 .kv.pos{color:var(--green)}.kv.neg{color:var(--red)}.kv.neu{color:var(--wh)}
 .ks{font-family:var(--mono);font-size:10px;color:var(--wh4)}
 
-/* ── CONTROLS ── */
 .controls{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;background:var(--bg2);border:1px solid var(--bg4);border-radius:8px;padding:20px}
 .ctrl{display:flex;flex-direction:column;gap:8px}
 .ctrl-label{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--wh3)}
@@ -85,7 +79,11 @@ input[type=range]{width:100%;height:4px;border-radius:2px;background:var(--bg5);
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--red);cursor:pointer;border:2px solid var(--bg2)}
 input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
 
-/* ── CHART CARD ── */
+.be-marker{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:6px;font-size:12px;margin-bottom:16px;font-family:var(--mono)}
+.be-marker.ok{background:rgba(29,158,117,.1);border:1px solid rgba(29,158,117,.25);color:#2ec89a}
+.be-marker.fail{background:var(--red3);border:1px solid var(--redb);color:var(--red)}
+.be-icon{font-size:14px}
+
 .chart-card{background:var(--bg2);border:1px solid var(--bg4);border-radius:8px;padding:22px;margin-bottom:24px}
 .chart-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--wh3);margin-bottom:3px}
 .chart-sub{font-family:var(--mono);font-size:10px;color:var(--wh4);margin-bottom:16px}
@@ -94,39 +92,10 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
 .li{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--wh3)}
 .ld{width:10px;height:3px;border-radius:1px;flex-shrink:0}
 
-/* ── SCENARIOS ── */
-.scenarios{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:24px}
-.sc{background:var(--bg2);border:1px solid var(--bg4);border-radius:8px;padding:16px}
-.sc-title{font-size:11px;font-weight:500;color:var(--wh3);margin-bottom:10px}
-.sc-val{font-family:var(--mono);font-size:17px;font-weight:500;color:var(--wh);margin-bottom:3px}
-.sc-unit{font-size:11px;font-weight:400;color:var(--wh4)}
-.sc-sub{font-size:11px;color:var(--wh4);margin-top:3px}
-.sc-desc{font-size:10px;color:var(--wh4);margin-top:6px;line-height:1.5}
-.tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:10px;margin-top:8px;letter-spacing:.04em}
-.tag-green{background:rgba(29,158,117,.12);color:#2ec89a;border:1px solid rgba(29,158,117,.2)}
-.tag-amber{background:rgba(212,160,23,.12);color:var(--amber);border:1px solid rgba(212,160,23,.2)}
-.tag-red{background:var(--red3);color:var(--red);border:1px solid var(--redb)}
-
-/* ── COST BREAKDOWN ── */
-.cost-table{width:100%;border-collapse:collapse;font-size:12px}
-.cost-table th{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--wh4);text-align:left;padding:8px 14px;border-bottom:1px solid var(--bg4);font-weight:400}
-.cost-table th:not(:first-child){text-align:right}
-.cost-table td{padding:10px 14px;font-family:var(--mono);font-size:11px;color:var(--wh3);border-bottom:1px solid var(--bg3)}
-.cost-table td:first-child{font-family:var(--sans);font-size:12px;color:var(--wh)}
-.cost-table td:not(:first-child){text-align:right}
-.cost-table tr:last-child td{border-bottom:none}
-.cost-table tr:hover td{background:var(--bg3)}
-.cost-table .tot td{background:var(--bg3);font-weight:500;color:var(--wh)!important}
-.tp{color:var(--green)}.tn{color:var(--red)}.tu{color:var(--wh4)}
-.bar-wrap{display:flex;align-items:center;gap:8px}
-.bar-track{flex:1;height:3px;background:var(--bg5);border-radius:2px;overflow:hidden;min-width:60px}
-.bar-fill{height:100%;border-radius:2px;transition:width .8s ease}
-
 @media(max-width:720px){
   .shell{grid-template-columns:1fr}.sidebar{display:none}
   .kpi-grid{grid-template-columns:repeat(2,1fr)}
   .controls{grid-template-columns:1fr}
-  .scenarios{grid-template-columns:1fr}
   .content{padding:16px}.topbar{padding:12px 16px}
 }
 @media print{.sidebar,.topbar{display:none}.shell{grid-template-columns:1fr}}
@@ -135,7 +104,6 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
 <body>
 <div class="shell">
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="brand">
     <div class="brand-mark"><div class="brand-dot"></div><span class="brand-name">Nu-Ko Capital</span></div>
@@ -145,8 +113,6 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
   <nav>
     <div class="nav-sec">Supuestos</div>
     <div class="nav-item active"><span class="ni">◈</span> Proyección</div>
-    <div class="nav-sec">Datos base</div>
-    <div class="nav-item"><span class="ni">◎</span> Estructura costos</div>
   </nav>
   <div class="sidebar-foot">
     <div class="health-row">ROI <span class="hv" id="s-roi">0%</span></div>
@@ -155,7 +121,6 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
   </div>
 </aside>
 
-<!-- MAIN -->
 <div class="main">
   <div class="topbar">
     <div class="tb-title">Proyección de referidos · Nu-Ko Capital LLC</div>
@@ -167,7 +132,6 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
 
   <div class="content">
 
-    <!-- KPIs -->
     <div class="kpi-grid">
       <div class="kpi accent">
         <div class="kl">Total referidos</div>
@@ -191,20 +155,19 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
       </div>
     </div>
 
-    <!-- CONTROLS -->
     <div class="sec-hdr"><div class="sec-lbl">Ajusta los supuestos</div><div class="sec-line"></div></div>
     <div class="controls">
       <div class="ctrl">
-        <div class="ctrl-label">👥 Participantes <span class="ctrl-val" id="lbl-part">50</span></div>
-        <input type="range" min="0" max="100" value="50" step="1" id="sl-part" oninput="update()">
+        <div class="ctrl-label">👥 Participantes <span class="ctrl-val" id="lbl-part">14</span></div>
+        <input type="range" min="0" max="100" value="14" step="1" id="sl-part" oninput="update()">
       </div>
       <div class="ctrl">
         <div class="ctrl-label">📈 Ref. promedio (anual) <span class="ctrl-val" id="lbl-prom">2.5</span></div>
         <input type="range" min="0" max="5" value="2.5" step="0.1" id="sl-prom" oninput="update()">
       </div>
       <div class="ctrl">
-        <div class="ctrl-label">💰 Inversión promedio (%) <span class="ctrl-val" id="lbl-inv">75%</span></div>
-        <input type="range" min="0" max="100" value="75" step="1" id="sl-inv" oninput="update()">
+        <div class="ctrl-label">💰 Inversión promedio (%) <span class="ctrl-val" id="lbl-inv">28%</span></div>
+        <input type="range" min="0" max="100" value="28" step="1" id="sl-inv" oninput="update()">
       </div>
       <div class="ctrl">
         <div class="ctrl-label">💳 Comisión por referido (%) <span class="ctrl-val" id="lbl-com">50%</span></div>
@@ -212,38 +175,20 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
       </div>
     </div>
 
-    <!-- ROI MARKER -->
-    <div class="be-marker ok" id="be-marker" style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:6px;font-size:12px;margin-bottom:16px;font-family:var(--mono);background:rgba(29,158,117,.1);border:1px solid rgba(29,158,117,.25);color:#2ec89a;">
-      <span>✓</span> ROI positivo: <strong id="roi-label">0%</strong>
+    <div class="be-marker fail" id="be-marker" style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:6px;font-size:12px;margin-bottom:16px;font-family:var(--mono);background:var(--red3);border:1px solid var(--redb);color:var(--red);">
+      <span class="be-icon">✗</span> ROI negativo: <strong id="roi-label">0%</strong>
     </div>
 
-    <!-- CHART -->
     <div class="chart-card">
       <div class="chart-title">Proyección mensual de ingresos vs. costos</div>
       <div class="chart-sub">Marzo 2026 → Diciembre 2026 · USD</div>
       <div class="legend">
         <div class="li"><div class="ld" style="background:#1D9E75"></div>Ingresos proyectados</div>
         <div class="li"><div class="ld" style="background:#E24B4A"></div>Costos totales</div>
-        <div class="li"><div class="ld" style="background:#378ADD"></div>Línea break-even</div>
       </div>
       <div class="chart-wrap">
         <canvas id="chart"></canvas>
       </div>
-    </div>
-
-    <!-- SCENARIOS -->
-    <div class="sec-hdr"><div class="sec-lbl">Escenarios comparados</div><div class="sec-line"></div></div>
-    <div class="scenarios" id="scenarios"></div>
-
-    <!-- COST BREAKDOWN -->
-    <div class="sec-hdr"><div class="sec-lbl">Estructura de costos base</div><div class="sec-line"></div></div>
-    <div class="chart-card" style="padding:0;overflow:hidden">
-      <table class="cost-table">
-        <thead>
-          <tr><th>Concepto</th><th>Mensual</th><th>Trimestral</th><th>Tipo</th><th>% del total</th></tr>
-        </thead>
-        <tbody id="cost-body"></tbody>
-      </table>
     </div>
 
   </div>
@@ -258,7 +203,6 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
 <script>
 let chart = null;
 
-// ── FORMAT ───────────────────────────────────────────────────────────
 function fmt(v) {
   if (!v) return '0';
   const a = Math.abs(v);
@@ -267,35 +211,29 @@ function fmt(v) {
   return '$' + Math.round(a).toLocaleString();
 }
 
-// ── UPDATE ───────────────────────────────────────────────────────────
 function update() {
-  // Leer sliders
   const part = parseFloat(document.getElementById('sl-part').value);
   const prom = parseFloat(document.getElementById('sl-prom').value);
   const invPct = parseFloat(document.getElementById('sl-inv').value);
   const comPct = parseFloat(document.getElementById('sl-com').value);
 
-  // Mostrar labels
   document.getElementById('lbl-part').textContent = part;
   document.getElementById('lbl-prom').textContent = prom.toFixed(1);
   document.getElementById('lbl-inv').textContent = invPct + '%';
   document.getElementById('lbl-com').textContent = comPct + '%';
 
-  // Cálculos
   const totalRefs = part * prom;
   const inversion = totalRefs * 1000 * (invPct / 100);
   const comisiones = totalRefs * 1000 * (comPct / 100);
   const ganancia = inversion - comisiones;
   const roi = comisiones > 0 ? (ganancia / comisiones) * 100 : 0;
 
-  // KPIs
   document.getElementById('k-total').textContent = Math.round(totalRefs);
   document.getElementById('k-inversion').textContent = fmt(inversion);
   document.getElementById('k-comisiones').textContent = fmt(comisiones);
   document.getElementById('k-ganancia').textContent = fmt(ganancia);
   document.getElementById('k-ganancia').style.color = ganancia >= 0 ? 'var(--green)' : 'var(--red)';
 
-  // Sidebar
   document.getElementById('s-roi').textContent = roi.toFixed(1) + '%';
   document.getElementById('s-roi').style.color = roi >= 0 ? 'var(--green)' : 'var(--red)';
   document.getElementById('s-be-label').textContent = 'Referidos: ' + Math.round(totalRefs);
@@ -303,39 +241,31 @@ function update() {
   document.getElementById('s-fill').style.width = fillPct + '%';
   document.getElementById('s-fill').style.background = roi >= 0 ? 'var(--green)' : 'var(--red)';
 
-  // ROI marker
   const marker = document.getElementById('be-marker');
   const roiLabel = document.getElementById('roi-label');
   if (roi >= 0) {
+    marker.className = 'be-marker ok';
     marker.style.background = 'rgba(29,158,117,.1)';
     marker.style.border = '1px solid rgba(29,158,117,.25)';
     marker.style.color = '#2ec89a';
-    marker.querySelector('span').textContent = '✓';
+    marker.querySelector('.be-icon').textContent = '✓';
     roiLabel.textContent = roi.toFixed(0) + '%';
   } else {
+    marker.className = 'be-marker fail';
     marker.style.background = 'var(--red3)';
     marker.style.border = '1px solid var(--redb)';
     marker.style.color = 'var(--red)';
-    marker.querySelector('span').textContent = '✗';
+    marker.querySelector('.be-icon').textContent = '✗';
     roiLabel.textContent = roi.toFixed(0) + '%';
   }
 
-  // Gráfico
   const meses = ['Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
   const ingresos = Array(10).fill().map((_, i) => totalRefs * (1000 + i * 200));
   const costos = Array(10).fill().map((_, i) => comisiones + (i * 1000));
-  const beLine = Array(10).fill(totalRefs * 1500);
-  drawChart(meses, ingresos, costos, beLine);
-
-  // Escenarios
-  renderScenarios(totalRefs, inversion, comisiones, roi);
-
-  // Costos
-  renderCosts(comisiones, inversion);
+  drawChart(meses, ingresos, costos);
 }
 
-// ── CHART ────────────────────────────────────────────────────────────
-function drawChart(labels, ingresos, costos, beLine) {
+function drawChart(labels, ingresos, costos) {
   const fmtY = v => (v >= 1e6 ? '$' + (v/1e6).toFixed(1) + 'M' : '$' + Math.round(v/1e3) + 'K');
   if (chart) chart.destroy();
   chart = new Chart(document.getElementById('chart'), {
@@ -344,8 +274,7 @@ function drawChart(labels, ingresos, costos, beLine) {
       labels: labels,
       datasets: [
         { label: 'Ingresos proyectados', data: ingresos, borderColor: '#1D9E75', backgroundColor: 'rgba(29,158,117,0.07)', fill: true, tension: 0.35, borderWidth: 2, pointRadius: 4 },
-        { label: 'Costos totales', data: costos, borderColor: '#E24B4A', backgroundColor: 'rgba(226,75,74,0.04)', fill: true, tension: 0.35, borderWidth: 1.5, pointRadius: 3 },
-        { label: 'Break-even', data: beLine, borderColor: '#378ADD', borderDash: [5, 3], borderWidth: 1.5, pointRadius: 0, fill: false }
+        { label: 'Costos totales', data: costos, borderColor: '#E24B4A', backgroundColor: 'rgba(226,75,74,0.04)', fill: true, tension: 0.35, borderWidth: 1.5, pointRadius: 3 }
       ]
     },
     options: {
@@ -353,14 +282,14 @@ function drawChart(labels, ingresos, costos, beLine) {
       interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { display: false },
-        tooltip: { backgroundColor: '#1a1a1a', borderColor: '#333', borderWidth: 1, titleColor: '#ddd', bodyColor: '#aaa',
+        tooltip: {
+          backgroundColor: '#1a1a1a',
+          borderColor: '#333',
+          borderWidth: 1,
+          titleColor: '#ddd',
+          bodyColor: '#aaa',
           callbacks: {
-            label: ctx => ' ' + ctx.dataset.label + ': ' + fmtY(ctx.raw),
-            afterBody: items => {
-              if (!items[0] || !items[1]) return [];
-              const r = items[0].raw - items[1].raw;
-              return ['', (r >= 0 ? '✓ Ganancia: ' : '✗ Pérdida: ') + fmtY(Math.abs(r))];
-            }
+            label: ctx => ' ' + ctx.dataset.label + ': ' + fmtY(ctx.raw)
           }
         }
       },
@@ -372,64 +301,14 @@ function drawChart(labels, ingresos, costos, beLine) {
   });
 }
 
-// ── SCENARIOS ────────────────────────────────────────────────────────
-function renderScenarios(totalRefs, inversion, comisiones, roi) {
-  const cases = [
-    { label: 'Optimista', refs: totalRefs * 1.2, inv: inversion * 1.1, com: comisiones * 0.8, desc: '+20% referidos, -20% comisión' },
-    { label: 'Base', refs: totalRefs, inv: inversion, com: comisiones, desc: 'Valores actuales' },
-    { label: 'Conservador', refs: totalRefs * 0.8, inv: inversion * 0.9, com: comisiones * 1.1, desc: '-20% referidos, +10% comisión' }
-  ];
-
-  document.getElementById('scenarios').innerHTML = cases.map(c => {
-    const gan = c.inv - c.com;
-    const roiCalc = c.com > 0 ? (gan / c.com) * 100 : 0;
-    const tagCls = roiCalc > 10 ? 'tag-green' : roiCalc > 0 ? 'tag-amber' : 'tag-red';
-    const tagLabel = roiCalc > 10 ? '✅ Rentable' : roiCalc > 0 ? '⚠️ Marginal' : '❌ Pérdida';
-    return `<div class="sc">
-      <div class="sc-title">${c.label}</div>
-      <div class="sc-val">${fmt(c.inv)}<span class="sc-unit"> inv.</span></div>
-      <div class="sc-sub">Comisión: ${fmt(c.com)}</div>
-      <div class="sc-desc">${c.desc}</div>
-      <span class="tag ${tagCls}">${tagLabel} · ROI ${roiCalc.toFixed(0)}%</span>
-    </div>`;
-  }).join('');
-}
-
-// ── COST TABLE ───────────────────────────────────────────────────────
-function renderCosts(comisiones, inversion) {
-  const items = [
-    { label: 'Comisiones por referido', mo: comisiones, type: 'Variable', color: '#E24B4A' },
-    { label: 'Inversión promedio', mo: inversion * 0.6, type: 'Variable', color: '#1D9E75' },
-    { label: 'Margen operativo', mo: inversion * 0.2, type: 'Fijo', color: '#378ADD' }
-  ];
-  const total = items.reduce((s, c) => s + c.mo, 0);
-  document.getElementById('cost-body').innerHTML = items.map(c => {
-    const pct = total ? (c.mo / total * 100).toFixed(1) : 0;
-    return `<tr>
-      <td>${c.label}</td>
-      <td class="tn">${fmt(c.mo)}</td>
-      <td class="tn">${fmt(c.mo * 3)}</td>
-      <td class="tu">${c.type}</td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${c.color}"></div></div><span style="font-size:10px;color:var(--wh4);min-width:32px">${pct}%</span></div></td>
-    </tr>`;
-  }).join('') + `<tr class="tot">
-    <td>Total</td>
-    <td class="tn">${fmt(total)}</td>
-    <td class="tn">${fmt(total * 3)}</td>
-    <td class="tu">—</td>
-    <td class="tu">100%</td>
-  </tr>`;
-}
-
 function resetSliders() {
-  document.getElementById('sl-part').value = 50;
+  document.getElementById('sl-part').value = 14;
   document.getElementById('sl-prom').value = 2.5;
-  document.getElementById('sl-inv').value = 75;
+  document.getElementById('sl-inv').value = 28;
   document.getElementById('sl-com').value = 50;
   update();
 }
 
-// ── INIT ─────────────────────────────────────────────────────────────
 update();
 </script>
 </body>
