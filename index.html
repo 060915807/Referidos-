@@ -3,22 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nu-Ko Capital · Proyección de Referidos</title>
+<title>Nu-Ko Capital · Simulador de Referidos</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 :root{
   --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--bg4:#242424;--bg5:#303030;
-  --red:#c8102e;--red2:#9e0d24;--red3:rgba(200,16,46,.10);--redb:rgba(200,16,46,.28);
+  --red:#c8102e;--red2:#9e0d24;
   --wh:#f5f5f0;--wh2:#d0d0c8;--wh3:#999;--wh4:#555;
-  --green:#1d9e75;--amber:#d4a017;--blue:#185fa5;
-  --sans:'Inter',system-ui,sans-serif;--mono:'DM Mono',monospace;
+  --green:#1d9e75;--sans:'Inter',system-ui,sans-serif;--mono:'DM Mono',monospace;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:14px;background:var(--bg);color:var(--wh);font-family:var(--sans)}
 body{min-height:100vh}
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:2px}
 
 .shell{display:grid;grid-template-columns:200px 1fr;min-height:100vh}
 
@@ -29,17 +25,11 @@ body{min-height:100vh}
 @keyframes glow{0%,100%{box-shadow:0 0 4px var(--red)}50%{box-shadow:0 0 14px var(--red),0 0 22px rgba(200,16,46,.3)}}
 .brand-name{font-size:15px;font-weight:600;letter-spacing:-.02em}
 .brand-sub{font-family:var(--mono);font-size:9px;color:var(--wh4);letter-spacing:.12em;text-transform:uppercase;padding-left:16px}
-.period{margin:14px 0 0;background:var(--bg4);border-radius:4px;padding:6px 10px;font-family:var(--mono);font-size:9px;color:var(--wh4);display:flex;justify-content:space-between}
-.period .val{color:var(--red);font-weight:500}
 
 nav{flex:1;padding:14px 8px}
-.nav-sec{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--wh4);padding:0 10px;margin:12px 0 4px}
 .nav-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:500;color:var(--wh4);border:1px solid transparent;transition:all .15s;margin-bottom:1px;text-decoration:none}
 .nav-item:hover{background:var(--bg4);color:var(--wh2)}
-.nav-item.active{background:var(--red3);border-color:var(--redb);color:var(--wh)}
-.nav-item.active .ni{color:var(--red)}
-.ni{font-size:13px;width:14px;text-align:center;opacity:.7}
-.nav-item.active .ni{opacity:1}
+.nav-item.active{background:rgba(200,16,46,.10);border-color:rgba(200,16,46,.28);color:var(--wh)}
 
 .sidebar-foot{padding:14px 20px;border-top:1px solid var(--bg4)}
 .health-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--wh4);margin-bottom:5px}
@@ -58,10 +48,6 @@ nav{flex:1;padding:14px 8px}
 
 .content{padding:24px 28px;flex:1}
 
-.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px}
-.sec-lbl{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--wh4);white-space:nowrap}
-.sec-line{flex:1;height:1px;background:var(--bg4)}
-
 .kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--bg4);border:1px solid var(--bg4);border-radius:8px;overflow:hidden;margin-bottom:24px}
 .kpi{background:var(--bg2);padding:16px 18px 14px;position:relative;transition:background .15s}
 .kpi:hover{background:var(--bg3)}
@@ -77,20 +63,14 @@ nav{flex:1;padding:14px 8px}
 .ctrl-val{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--wh);background:var(--bg4);border:1px solid var(--bg5);border-radius:4px;padding:2px 8px}
 input[type=range]{width:100%;height:4px;border-radius:2px;background:var(--bg5);outline:none;cursor:pointer;-webkit-appearance:none}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--red);cursor:pointer;border:2px solid var(--bg2)}
-input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
 
 .be-marker{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:6px;font-size:12px;margin-bottom:16px;font-family:var(--mono)}
 .be-marker.ok{background:rgba(29,158,117,.1);border:1px solid rgba(29,158,117,.25);color:#2ec89a}
-.be-marker.fail{background:var(--red3);border:1px solid var(--redb);color:var(--red)}
+.be-marker.fail{background:rgba(200,16,46,.10);border:1px solid rgba(200,16,46,.28);color:var(--red)}
 .be-icon{font-size:14px}
 
-.chart-card{background:var(--bg2);border:1px solid var(--bg4);border-radius:8px;padding:22px;margin-bottom:24px}
-.chart-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--wh3);margin-bottom:3px}
-.chart-sub{font-family:var(--mono);font-size:10px;color:var(--wh4);margin-bottom:16px}
-.chart-wrap{position:relative;width:100%;height:300px}
-.legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px}
-.li{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--wh3)}
-.ld{width:10px;height:3px;border-radius:1px;flex-shrink:0}
+footer{padding:12px 28px;border-top:1px solid var(--bg4);display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--wh4)}
+footer span{color:var(--red)}
 
 @media(max-width:720px){
   .shell{grid-template-columns:1fr}.sidebar{display:none}
@@ -98,7 +78,6 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
   .controls{grid-template-columns:1fr}
   .content{padding:16px}.topbar{padding:12px 16px}
 }
-@media print{.sidebar,.topbar{display:none}.shell{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -107,12 +86,10 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
 <aside class="sidebar">
   <div class="brand">
     <div class="brand-mark"><div class="brand-dot"></div><span class="brand-name">Nu-Ko Capital</span></div>
-    <div class="brand-sub">Proyección Referidos</div>
-    <div class="period">Simulación <span class="val">2026</span></div>
+    <div class="brand-sub">Simulador Referidos</div>
   </div>
   <nav>
-    <div class="nav-sec">Supuestos</div>
-    <div class="nav-item active"><span class="ni">◈</span> Proyección</div>
+    <div class="nav-item active"><span class="ni">◈</span> Simulador</div>
   </nav>
   <div class="sidebar-foot">
     <div class="health-row">ROI <span class="hv" id="s-roi">0%</span></div>
@@ -123,7 +100,7 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
 
 <div class="main">
   <div class="topbar">
-    <div class="tb-title">Proyección de referidos · Nu-Ko Capital LLC</div>
+    <div class="tb-title">Simulador de referidos · Nu-Ko Capital LLC</div>
     <div class="tb-right">
       <button class="btn" onclick="resetSliders()">↺ Restablecer</button>
       <button class="btn btn-red" onclick="window.print()">↓ Exportar</button>
@@ -132,57 +109,62 @@ input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px}
 
   <div class="content">
 
-    <!-- CONTROLES -->
-    <div class="sec-hdr"><div class="sec-lbl">Ajusta los supuestos</div><div class="sec-line"></div></div>
+    <div class="kpi-grid">
+      <div class="kpi accent">
+        <div class="kl">Total referidos</div>
+        <div class="kv neu" id="k-total">0</div>
+        <div class="ks">Referidos generados</div>
+      </div>
+      <div class="kpi">
+        <div class="kl">Inversión total</div>
+        <div class="kv neg" id="k-inversion">$0</div>
+        <div class="ks">Volumen invertido</div>
+      </div>
+      <div class="kpi">
+        <div class="kl">Comisiones</div>
+        <div class="kv neg" id="k-comisiones">$0</div>
+        <div class="ks">Costo de comisiones</div>
+      </div>
+      <div class="kpi">
+        <div class="kl">Ganancia neta</div>
+        <div class="kv neu" id="k-ganancia">$0</div>
+        <div class="ks">Inversión - Comisiones</div>
+      </div>
+    </div>
+
     <div class="controls">
       <div class="ctrl">
-        <div class="ctrl-label">👥 Participantes <span class="ctrl-val" id="lbl-part">45</span></div>
-        <input type="range" min="0" max="100" value="45" step="1" id="sl-part" oninput="update()">
+        <div class="ctrl-label">👥 Número de participantes <span class="ctrl-val" id="lbl-part">100</span></div>
+        <input type="range" min="0" max="200" value="100" step="1" id="sl-part" oninput="update()">
       </div>
       <div class="ctrl">
-        <div class="ctrl-label">📈 Ref. promedio (anual) <span class="ctrl-val" id="lbl-prom">2.5</span></div>
-        <input type="range" min="0" max="5" value="2.5" step="0.1" id="sl-prom" oninput="update()">
+        <div class="ctrl-label">📈 Referidos promedio (anual) <span class="ctrl-val" id="lbl-prom">5</span></div>
+        <input type="range" min="0" max="10" value="5" step="0.1" id="sl-prom" oninput="update()">
       </div>
       <div class="ctrl">
-        <div class="ctrl-label">💰 Inversión promedio (%) <span class="ctrl-val" id="lbl-inv">28%</span></div>
-        <input type="range" min="0" max="100" value="28" step="1" id="sl-inv" oninput="update()">
+        <div class="ctrl-label">💰 Volumen promedio por referido <span class="ctrl-val" id="lbl-vol">$5,000</span></div>
+        <input type="range" min="1000" max="10000" value="5000" step="100" id="sl-vol" oninput="update()">
       </div>
       <div class="ctrl">
-        <div class="ctrl-label">💳 Comisión por referido (%) <span class="ctrl-val" id="lbl-com">50%</span></div>
-        <input type="range" min="0" max="100" value="50" step="1" id="sl-com" oninput="update()">
+        <div class="ctrl-label">💳 Comisión por referido <span class="ctrl-val" id="lbl-com">$60</span></div>
+        <input type="range" min="0" max="200" value="60" step="5" id="sl-com" oninput="update()">
       </div>
     </div>
 
-    <!-- ROI MARKER -->
-    <div class="be-marker fail" id="be-marker" style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:6px;font-size:12px;margin-bottom:16px;font-family:var(--mono);background:var(--red3);border:1px solid var(--redb);color:var(--red);">
-      <span class="be-icon">✗</span> ROI negativo: <strong id="roi-label">0%</strong>
-    </div>
-
-    <!-- CHART -->
-    <div class="chart-card">
-      <div class="chart-title">Proyección mensual de ingresos vs. costos</div>
-      <div class="chart-sub">Marzo 2026 → Diciembre 2026 · USD</div>
-      <div class="legend">
-        <div class="li"><div class="ld" style="background:#1D9E75"></div>Ingresos proyectados</div>
-        <div class="li"><div class="ld" style="background:#E24B4A"></div>Costos totales</div>
-      </div>
-      <div class="chart-wrap">
-        <canvas id="chart"></canvas>
-      </div>
+    <div class="be-marker ok" id="be-marker">
+      <span class="be-icon">✓</span> ROI: <strong id="roi-label">0%</strong>
     </div>
 
   </div>
 
   <footer>
-    <span>Nu-Ko Capital LLC · Proyección de Referidos · Datos simulados</span>
+    <span>Nu-Ko Capital LLC · Simulador de Referidos</span>
     <span>2026</span>
   </footer>
 </div>
 </div>
 
 <script>
-let chart = null;
-
 function fmt(v) {
   if (!v) return '0';
   const a = Math.abs(v);
@@ -194,17 +176,17 @@ function fmt(v) {
 function update() {
   const part = parseFloat(document.getElementById('sl-part').value);
   const prom = parseFloat(document.getElementById('sl-prom').value);
-  const invPct = parseFloat(document.getElementById('sl-inv').value);
-  const comPct = parseFloat(document.getElementById('sl-com').value);
+  const vol = parseFloat(document.getElementById('sl-vol').value);
+  const com = parseFloat(document.getElementById('sl-com').value);
 
-  document.getElementById('lbl-part').textContent = part;
+  document.getElementById('lbl-part').textContent = Math.round(part);
   document.getElementById('lbl-prom').textContent = prom.toFixed(1);
-  document.getElementById('lbl-inv').textContent = invPct + '%';
-  document.getElementById('lbl-com').textContent = comPct + '%';
+  document.getElementById('lbl-vol').textContent = '$' + Math.round(vol).toLocaleString();
+  document.getElementById('lbl-com').textContent = '$' + Math.round(com).toLocaleString();
 
   const totalRefs = part * prom;
-  const inversion = totalRefs * 1000 * (invPct / 100);
-  const comisiones = totalRefs * 1000 * (comPct / 100);
+  const inversion = totalRefs * vol;
+  const comisiones = totalRefs * com;
   const ganancia = inversion - comisiones;
   const roi = comisiones > 0 ? (ganancia / comisiones) * 100 : 0;
 
@@ -232,60 +214,19 @@ function update() {
     roiLabel.textContent = roi.toFixed(0) + '%';
   } else {
     marker.className = 'be-marker fail';
-    marker.style.background = 'var(--red3)';
-    marker.style.border = '1px solid var(--redb)';
+    marker.style.background = 'rgba(200,16,46,.10)';
+    marker.style.border = '1px solid rgba(200,16,46,.28)';
     marker.style.color = 'var(--red)';
     marker.querySelector('.be-icon').textContent = '✗';
     roiLabel.textContent = roi.toFixed(0) + '%';
   }
-
-  const meses = ['Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  const ingresos = Array(10).fill().map((_, i) => totalRefs * (1000 + i * 200));
-  const costos = Array(10).fill().map((_, i) => comisiones + (i * 1000));
-  drawChart(meses, ingresos, costos);
-}
-
-function drawChart(labels, ingresos, costos) {
-  const fmtY = v => (v >= 1e6 ? '$' + (v/1e6).toFixed(1) + 'M' : '$' + Math.round(v/1e3) + 'K');
-  if (chart) chart.destroy();
-  chart = new Chart(document.getElementById('chart'), {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [
-        { label: 'Ingresos proyectados', data: ingresos, borderColor: '#1D9E75', backgroundColor: 'rgba(29,158,117,0.07)', fill: true, tension: 0.35, borderWidth: 2, pointRadius: 4 },
-        { label: 'Costos totales', data: costos, borderColor: '#E24B4A', backgroundColor: 'rgba(226,75,74,0.04)', fill: true, tension: 0.35, borderWidth: 1.5, pointRadius: 3 }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#1a1a1a',
-          borderColor: '#333',
-          borderWidth: 1,
-          titleColor: '#ddd',
-          bodyColor: '#aaa',
-          callbacks: {
-            label: ctx => ' ' + ctx.dataset.label + ': ' + fmtY(ctx.raw)
-          }
-        }
-      },
-      scales: {
-        x: { ticks: { color: '#555', font: { size: 11 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
-        y: { ticks: { color: '#555', font: { size: 11 }, callback: fmtY }, grid: { color: 'rgba(255,255,255,0.05)' } }
-      }
-    }
-  });
 }
 
 function resetSliders() {
-  document.getElementById('sl-part').value = 45;
-  document.getElementById('sl-prom').value = 2.5;
-  document.getElementById('sl-inv').value = 28;
-  document.getElementById('sl-com').value = 50;
+  document.getElementById('sl-part').value = 100;
+  document.getElementById('sl-prom').value = 5;
+  document.getElementById('sl-vol').value = 5000;
+  document.getElementById('sl-com').value = 60;
   update();
 }
 
